@@ -1,0 +1,10 @@
+# server/.gitignore
+
+# Dépendances
+node_modules
+
+# Fichier de base de données
+creakit.db
+
+# Fichiers d'environnement (nous en aurons plus tard)
+.env
