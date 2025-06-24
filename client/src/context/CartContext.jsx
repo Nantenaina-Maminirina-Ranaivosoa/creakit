@@ -25,13 +25,39 @@ export function CartProvider({ children }) {
         return [...prevItems, { ...productToAdd, quantity: 1 }];
       }
     });
-    console.log("Panier mis à jour :", cartItems);
   };
 
-  // 3. On définit la "valeur" que le contexte va fournir à ses enfants
+  const removeFromCart = (productId) => {
+    setCartItems(prevItems => {
+      const existingItem = prevItems.find(item => item.id === productId);
+      if (existingItem.quantity === 1) {
+        // Si la quantité est 1, on filtre l'article du panier
+        return prevItems.filter(item => item.id !== productId);
+      } else {
+        // Sinon, on décrémente juste la quantité
+        return prevItems.map(item =>
+          item.id === productId
+            ? { ...item, quantity: item.quantity - 1 }
+            : item
+        );
+      }
+    });
+  };
+  
+  const deleteFromCart = (productId) => {
+    setCartItems(prevItems => prevItems.filter(item => item.id !== productId));
+  };
+  
+  // On peut aussi ajouter une valeur calculée pour le total
+  const cartTotal = cartItems.reduce((total, item) => total + item.price * item.quantity, 0);
+
+
   const value = {
     cartItems,
     addToCart,
+    removeFromCart, // <-- Exposer la nouvelle fonction
+    deleteFromCart, // <-- Exposer la nouvelle fonction
+    cartTotal,      // <-- Exposer la valeur calculée
   };
 
   return (

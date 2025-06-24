@@ -8,26 +8,25 @@ import ProductDetailPage from './pages/ProductDetailPage.jsx';
 import './index.css';
 import { CartProvider } from './context/CartContext';
 import RootLayout from './layouts/RootLayout';
+import CartPage from './pages/CartPage.jsx'; 
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <RootLayout />, // Le layout devient l'élément parent
+    element: <RootLayout />,
     children: [
-      // Ces routes s'afficheront dans le <Outlet /> du layout
       {
-        index: true, // "index: true" remplace "path: '/'" pour la route par défaut
+        index: true,
         element: <App />,
       },
       {
         path: "kits/:kitId",
         element: <ProductDetailPage />,
       },
-      // On prépare la future page panier
-      // {
-      //   path: "panier",
-      //   element: <CartPage />, 
-      // },
+      { // <-- On active la route pour le panier
+        path: "panier",
+        element: <CartPage />,
+      },
     ]
   },
 ]);
