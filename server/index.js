@@ -21,7 +21,7 @@ const db = new sqlite3.Database('./creakit.db', (err) => {
 });
 
 // 4. Création de la table 'kits' si elle n'existe pas
-// C'est ici que nous utilisons nos compétences SQL.
+// C'est ici que j'utilise mes compétences SQL.
 db.serialize(() => {
   db.run(`CREATE TABLE IF NOT EXISTS kits (
     id INTEGER PRIMARY KEY AUTOINCREMENT,

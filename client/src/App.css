@@ -1,0 +1,19 @@
+/* client/src/App.css */
+
+.app-header {
+  background-color: #282c34;
+  padding: 20px;
+  color: white;
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.kits-grid {
+  display: grid;
+  /* Crée des colonnes qui font au minimum 300px et au maximum 1fr (une fraction de l'espace dispo) */
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 24px; /* Espace entre les cartes */
+  padding: 0 24px; /* Un peu d'air sur les côtés */
+  max-width: 1200px;
+  margin: 0 auto; /* Centre la grille */
+}
