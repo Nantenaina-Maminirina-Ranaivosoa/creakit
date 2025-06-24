@@ -84,6 +84,32 @@ app.get('/api/kits', (req, res) => {
         });
     });
 });
+
+// 7. <-- NOUVEAU : Endpoint pour récupérer UN SEUL kit par son ID
+app.get('/api/kits/:id', (req, res) => {
+    // On récupère l'ID depuis les paramètres de la route
+    const id = req.params.id;
+    const sql = "SELECT * FROM kits WHERE id = ?";
+
+    // db.get récupère la première ligne correspondante, contrairement à db.all
+    db.get(sql, [id], (err, row) => {
+        if (err) {
+            res.status(500).json({ "error": err.message });
+            return;
+        }
+
+        // Si 'row' existe, on le renvoie. Sinon, on renvoie une erreur 404 (Non trouvé)
+        if (row) {
+            res.json({
+                "message": "success",
+                "data": row
+            });
+        } else {
+            res.status(404).json({ "message": "Kit non trouvé." });
+        }
+    });
+});
+
 // 6. Démarrage du serveur
 app.listen(PORT, () => {
   console.log(`Serveur démarré sur http://localhost:${PORT}`);

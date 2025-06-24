@@ -47,3 +47,8 @@
   color: #007bff;
   align-self: flex-end; /* Aligne le prix à droite */
 }
+
+.kit-card-link {
+    text-decoration: none;
+    color: inherit;
+}
