@@ -1,14 +1,17 @@
 // client/src/main.jsx
 
-import React from 'react';
-import ReactDOM from 'react-dom/client';
+import React from "react";
+import ReactDOM from "react-dom/client";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import App from './App.jsx';
-import ProductDetailPage from './pages/ProductDetailPage.jsx';
-import './index.css';
-import { CartProvider } from './context/CartContext';
-import RootLayout from './layouts/RootLayout';
-import CartPage from './pages/CartPage.jsx'; 
+import App from "./App.jsx";
+import ProductDetailPage from "./pages/ProductDetailPage.jsx";
+import "./index.css";
+import { CartProvider } from "./context/CartContext";
+import RootLayout from "./layouts/RootLayout";
+import CartPage from "./pages/CartPage.jsx";
+import { AuthProvider } from "./context/AuthContext";
+import RegisterPage from "./pages/RegisterPage.jsx";
+import LoginPage from "./pages/LoginPage.jsx";
 
 const router = createBrowserRouter([
   {
@@ -23,20 +26,23 @@ const router = createBrowserRouter([
         path: "kits/:kitId",
         element: <ProductDetailPage />,
       },
-      { // <-- On active la route pour le panier
+      {
+        // <-- On active la route pour le panier
         path: "panier",
         element: <CartPage />,
       },
-    ]
+      { path: "register", element: <RegisterPage /> },
+      { path: "login", element: <LoginPage /> },
+    ],
   },
 ]);
 
-ReactDOM.createRoot(document.getElementById('root')).render(
+ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-        <CartProvider>
-
-    <RouterProvider router={router} />
-        </CartProvider>
-
-  </React.StrictMode>,
-)
+    <AuthProvider>
+      <CartProvider>
+        <RouterProvider router={router} />
+      </CartProvider>
+    </AuthProvider>
+  </React.StrictMode>
+);
