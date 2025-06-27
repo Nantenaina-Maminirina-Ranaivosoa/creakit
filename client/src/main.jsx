@@ -12,28 +12,30 @@ import CartPage from "./pages/CartPage.jsx";
 import { AuthProvider } from "./context/AuthContext";
 import RegisterPage from "./pages/RegisterPage.jsx";
 import LoginPage from "./pages/LoginPage.jsx";
+import ProtectedRoute from './components/auth/ProtectedRoute.jsx';
+import AccountPage from './pages/AccountPage.jsx';
 
 const router = createBrowserRouter([
   {
-    path: "/",
-    element: <RootLayout />,
+    element: <RootLayout />, // Le layout parent ne change pas
     children: [
-      {
-        index: true,
-        element: <App />,
-      },
-      {
-        path: "kits/:kitId",
-        element: <ProductDetailPage />,
-      },
-      {
-        // <-- On active la route pour le panier
-        path: "panier",
-        element: <CartPage />,
-      },
+      // --- Routes Publiques ---
+      { index: true, element: <App /> },
+      { path: "kits/:kitId", element: <ProductDetailPage />},
+      { path: "panier", element: <CartPage />},
       { path: "register", element: <RegisterPage /> },
       { path: "login", element: <LoginPage /> },
-    ],
+
+      // --- Routes Protégées ---
+      {
+        element: <ProtectedRoute />, // Le garde se place ici
+        children: [
+          // Toutes les routes à l'intérieur seront protégées
+          { path: "compte", element: <AccountPage /> },
+          // Ex: { path: "checkout", element: <CheckoutPage /> }
+        ]
+      }
+    ]
   },
 ]);
 

@@ -15,6 +15,8 @@ const cors = require("cors");
 const app = express();
 app.use(cors());
 app.use(express.json());
+
+const { protect } = require('./middleware/authMiddleware');
 const PORT = process.env.PORT || 3001; // On utilisera le port 3001 pour le backend
 
 // 3. Connexion à la base de données SQLite
@@ -220,6 +222,15 @@ app.post('/api/auth/login', (req, res) => {
         );
 
         res.json({ token, user: {id: user.id, username: user.username} });
+    });
+});
+
+app.get('/api/users/profile', protect, (req, res) => {
+    // Grâce au middleware `protect`, on a accès à req.user ici
+    res.json({
+        id: req.user.id,
+        username: req.user.username,
+        email: req.user.email
     });
 });
 
